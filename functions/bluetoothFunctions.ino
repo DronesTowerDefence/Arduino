@@ -18,7 +18,7 @@ int checkBluetoothHeader()
         dataSource = Serial1.readString();
 
         Serial.print("Erhaltene Daten: "); // Ausgabe: Rohdaten
-        Serial.print(dataSource);
+        Serial.println(dataSource);
 
         while (nextHeaderInString) // Solange noch ein Header in dem String kommt
         {
@@ -35,7 +35,7 @@ int checkBluetoothHeader()
             header = dataSource[first + 1];
 
             Serial.print("Erhaltener Header: "); // Ausgabe: Header
-            Serial.print(header);
+            Serial.println(header);
 
             first = dataSource.indexOf("\2");  // Sucht SOH
             second = dataSource.indexOf("\3"); // Sucht ETX
@@ -47,7 +47,7 @@ int checkBluetoothHeader()
             }
 
             Serial.print("Erhaltener Inhalt: "); // Ausgabe: Inhalt
-            Serial.print(data);
+            Serial.println(data);
 
             if (dataReadOfString + data.length() + header.length() + 3 < dataSource.length())
             {
@@ -102,25 +102,30 @@ int checkBluetoothHeader()
 }
 
 // Bluetooth Senden
-bool sendBluetoothData(int parameter)
+// 1: Geschwindigkeit
+// 2: IR-Sensor
+bool sendBluetoothData(int parameter, int parameter2)
 {
     int header = 0;
-    int value = 0;
+    int value = parameter2;
     switch (parameter)
     {
     case 1: // Geschwindigkeit
         header = 3;
-        value = 0 // Geschwindigkeit auslesen
             break;
 
     case 2: // IR-Sensor
         header = 6;
-        value = 0; // IR-Sensor auslesen
         break;
 
     default:
         return false;
     }
+
+    Serial.print("Header: "); // Ausgabe: Header
+    Serial.println(header);
+    Serial.print("Value: "); // Ausgabe: Inhalt
+    Serial.println(value);
 
     Serial1.write("\1" + to_string(header) + "\2" + to_string(value) + "\3");
     return true;
