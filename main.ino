@@ -1,15 +1,21 @@
 #include <string.h>
-#include "functions/BluetoothReceiverClass.ino"
+#include "functions/BluetoothFunctions.cpp"
+#include "functions/IRSensor.cpp"
 
 void setup()
 {
-  Serial1.begin(9600);
-  Serial.begin(9600);
+    Serial1.begin(9600);
+    Serial.begin(9600);
+
+    pinMode(IRSensorV, INPUT);    // IR-Vorne
+    pinMode(IRSensorH, INPUT);    // IR-Hinten
+    pinMode(IRStatusLED, OUTPUT); // IR-StatusLED
 }
 
 void loop()
 {
-  checkBluetoothHeader();
+    checkBluetoothHeader();
+    sendBluetoothData(2, readIRSensor());
 
-  delay(50);
+    delay(50);
 }
