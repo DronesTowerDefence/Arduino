@@ -1,6 +1,7 @@
 #include <string.h>
 #include "functions/BluetoothFunctions.cpp"
 #include "functions/IRSensor.cpp"
+//Gommemode
 
 void setup()
 {
