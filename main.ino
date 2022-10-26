@@ -1,7 +1,8 @@
 #include <string.h>
 #include "functions/BluetoothFunctions.cpp"
 #include "functions/IRSensor.cpp"
-//Gommemode
+
+const int statusLED = 13;
 
 void setup()
 {
@@ -10,13 +11,13 @@ void setup()
 
     pinMode(IRSensorV, INPUT);    // IR-Vorne
     pinMode(IRSensorH, INPUT);    // IR-Hinten
-    pinMode(IRStatusLED, OUTPUT); // IR-StatusLED
+    pinMode(statusLED, OUTPUT); // IR-StatusLED
 }
 
 void loop()
 {
     checkBluetoothHeader();
-    sendBluetoothData(2, readIRSensor());
+    readIRSensor();
 
     delay(50);
 }
