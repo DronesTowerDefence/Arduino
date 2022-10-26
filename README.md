@@ -14,7 +14,7 @@ All of this is controlled by an Arduino Mega.
 
 Wir entwickeln in C++ in VS Code:
 
-Github Extension: https://code.visualstudio.com/docs/sourcecontrol/github
+Github Extension: https://code.visualstudio.com/docs/sourcecontrol/github <br>
 Arduino Extension: https://github.com/microsoft/vscode-arduino
 
 by @kelp-byte
