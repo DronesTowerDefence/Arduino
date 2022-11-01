@@ -9,18 +9,18 @@ int readIRSensor()
 {
     int returnValue = 0;
 
-    //LED - NUR ZUM TESTEN
-    if (digitalRead(IRSensorV) == 1)
+    /* //LED - NUR ZUM TESTEN
+    if (digitalRead(IRSensorV) != 1)
     {
-        Serial.println("Nichts");
-        digitalWrite(statusLED, LOW);
+        Serial.println("Hindernis");
+        digitalWrite(13, HIGH);
     }
     else
     {
-        Serial.println("Hindernis");
-        digitalWrite(statusLED, HIGH);
+        Serial.println("Nichts");
+        digitalWrite(13, LOW);
     }
-    //
+    // */
 
     if (digitalRead(IRSensorV) != 1)
     {

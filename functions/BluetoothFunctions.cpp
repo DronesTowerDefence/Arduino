@@ -57,7 +57,7 @@ bool checkBluetoothHeader()
                 Serial.print("Rest: ");
                 Serial.println(dataSource);
             }
-
+            
             // Header-Überprüfung:
             if (header == '1') // Bewegung: Vor/Zurück
             {
