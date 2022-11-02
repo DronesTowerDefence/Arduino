@@ -1,16 +1,18 @@
+// Lenkung
 #include <Servo.h>
 
 Servo steeringServo;
 
 bool changeServo(int changeRotation)
 {
-    if (changeRotation >= 45 && changeRotation <= 155)
+    int tmp = steeringServo.read();
+    if (tmp + changeRotation >= 45 && tmp + changeRotation <= 155)
     {
-        steeringServo.write(changeRotation);
+        steeringServo.write(tmp + changeRotation);
         Serial.print("Servo auf: ");
         Serial.println(steeringServo.read());
         return true;
     }
-    else return false;
-
+    else
+        return false;
 }

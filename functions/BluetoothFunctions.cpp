@@ -1,5 +1,7 @@
 // Bluetooth: Empfangen und Senden
 
+int bluetoothStatus = 5;
+
 /// @brief Bluetooth Empfang und Umsetzung der erhaltenen Daten
 /// @return Ob eine Nachricht angekommen ist
 bool checkBluetoothHeader()
@@ -135,4 +137,19 @@ bool sendBluetoothData(int parameter, int parameter2)
         return true;
     else
         return false;
+}
+
+/// @brief Überprüft, ob die Verbindung zur Fernbedienung noch steht oder nicht
+/// @return True wenn Verbindung vorhanden
+bool checkBluetoothConnection()
+{
+    if(digitalRead(bluetoothStatus) == 1)
+    {
+        return true;
+    }
+    else
+    {
+        //Bremsen
+        return false;
+    }
 }

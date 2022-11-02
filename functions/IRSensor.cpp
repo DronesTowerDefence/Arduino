@@ -1,4 +1,4 @@
-// IR-Sensor-Zeug
+// IR-Sensor
 
 const int IRSensorV = 2;
 const int IRSensorH = 4;

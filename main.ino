@@ -9,12 +9,13 @@ void setup()
     Serial1.begin(9600);
     Serial.begin(9600);
 
-    pinMode(IRSensorV, INPUT);    // IR-Vorne
-    pinMode(IRSensorH, INPUT);    // IR-Hinten
-    pinMode(13, OUTPUT); // IR-StatusLED
-    steeringServo.attach(8); //PWM-Anschluss des Servo-Motors
+    pinMode(bluetoothStatus, INPUT); //Bluetooth-Status
+    pinMode(IRSensorV, INPUT); // IR-Vorne
+    pinMode(IRSensorH, INPUT); // IR-Hinten
+    pinMode(13, OUTPUT);       // IR-StatusLED
+    steeringServo.attach(8);   // PWM-Anschluss des Servo-Motors
 
-    accelerationSensorSetup();
+    accelerationSensorSetup(); //Setup für den Beschleunigungssensors
 }
 
 void loop()
