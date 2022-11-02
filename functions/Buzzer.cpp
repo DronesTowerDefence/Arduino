@@ -3,9 +3,9 @@
 const int buzzerPin = 9;
 int buzzerCount = 0;
 
-void hupe(bool lever)
+void horn(bool hornSwitch)
 {
-    if (lever)
+    if (hornSwitch)
     {
         buzzerCount = 0;
     }

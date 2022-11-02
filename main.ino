@@ -1,9 +1,9 @@
 #include <string.h>
 #include "functions/IRSensor.cpp"
-#include "functions/Steering.cpp"
 #include "functions/AccelerationSensor.cpp"
 #include "functions/Light.cpp"
 #include "functions/Buzzer.cpp"
+#include "functions/Steering.cpp"
 #include "functions/BluetoothFunctions.cpp"
 
 void setup()

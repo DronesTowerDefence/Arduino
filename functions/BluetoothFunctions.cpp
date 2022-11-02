@@ -95,7 +95,7 @@ bool checkBluetoothHeader()
             }
             else if (header == '5') // Hupe
             {
-                hupe(data.toInt());
+                horn(data.toInt());
                 returnValue = true;
                 Serial.println("Hupe");
             }
