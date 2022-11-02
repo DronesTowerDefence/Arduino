@@ -1,6 +1,6 @@
 // Bluetooth: Empfangen und Senden
 
-int bluetoothStatus = 3;
+const int bluetoothStatus = 3;
 
 /// @brief Bluetooth Empfang und Umsetzung der erhaltenen Daten
 /// @return Ob eine Nachricht angekommen ist
@@ -59,7 +59,7 @@ bool checkBluetoothHeader()
                 Serial.print("Rest: ");
                 Serial.println(dataSource);
             }
-            
+
             // Header-Überprüfung:
             if (header == '1') // Bewegung: Vor/Zurück
             {
@@ -83,19 +83,19 @@ bool checkBluetoothHeader()
             }
             else if (header == '2') // Lenkung
             {
-                // Lenkung
+                changeSteering(data.toInt());
                 returnValue = true;
                 Serial.println("Lenken");
             }
             else if (header == '4') // Licht
             {
-                // Licht
+                light(data.toInt());
                 returnValue = true;
                 Serial.println("Licht");
             }
             else if (header == '5') // Hupe
             {
-                // Hupe
+                hupe(data.toInt());
                 returnValue = true;
                 Serial.println("Hupe");
             }
@@ -143,13 +143,13 @@ bool sendBluetoothData(int parameter, int parameter2)
 /// @return True wenn Verbindung vorhanden
 bool checkBluetoothConnection()
 {
-    if(digitalRead(bluetoothStatus) == 1)
+    if (digitalRead(bluetoothStatus) == 1)
     {
         return true;
     }
     else
     {
-        //Bremsen
+        // Bremsen
         return false;
     }
 }

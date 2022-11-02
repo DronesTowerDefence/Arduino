@@ -2,17 +2,40 @@
 #include <Servo.h>
 
 Servo steeringServo;
+int steeringPos = 0;
 
-bool changeServo(int changeRotation)
+/// @brief Ändert die Auslenkung der Lenkachse
+/// @param changeRotation Grad in welche die Richtung verändert werden soll 
+/// @return Ob die Auslenkung verändert wurde
+bool changeSteering(int changeRotation)
 {
-    int tmp = steeringServo.read();
-    if (tmp + changeRotation >= 45 && tmp + changeRotation <= 155)
+    if (steeringPos + changeRotation >= 45 && steeringPos + changeRotation <= 155)
     {
-        steeringServo.write(tmp + changeRotation);
+        steeringPos+=changeRotation;
+        steeringServo.write(steeringPos);
         Serial.print("Servo auf: ");
         Serial.println(steeringServo.read());
         return true;
     }
     else
         return false;
+}
+
+/// @brief Überprüft, ob die Position der Lenkung richtig ist und setzt ggf. den Blinker
+void checkSteering()
+{
+    steeringServo.write(steeringPos);
+
+    if (steeringPos == 100)
+    {
+        indicator(0);
+    }
+    else if (steeringPos > 100)
+    {
+        indicator(2);
+    }
+    else if (steeringPos < 100)
+    {
+        indicator(1);
+    }
 }
