@@ -1,6 +1,6 @@
 // Bluetooth: Empfangen und Senden
 
-int bluetoothStatus = 5;
+int bluetoothStatus = 3;
 
 /// @brief Bluetooth Empfang und Umsetzung der erhaltenen Daten
 /// @return Ob eine Nachricht angekommen ist

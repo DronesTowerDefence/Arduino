@@ -1,7 +1,7 @@
 // IR-Sensor
 
-const int IRSensorV = 2;
-const int IRSensorH = 4;
+const int IRSensorV = 4;
+const int IRSensorH = 5;
 
 /// @brief Auslesen der IR-Sensoren
 /// @return 0:Nichts | 1:Vorne | 2:Hinten | 3:Beide
