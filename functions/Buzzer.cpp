@@ -1,7 +1,7 @@
 // Buzzer (Hupe)
 
 // Song welcher abgespielt wird, wenn die Hupe betätigt wird
-#include "song_cantinaBand.cpp"
+#include "BuzzerSong.cpp"
 
 const int buzzerPin = 9;
 int buzzerCount = 0;
