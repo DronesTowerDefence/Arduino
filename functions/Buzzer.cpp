@@ -1,9 +1,28 @@
 // Buzzer (Hupe)
 
+// Song welcher abgespielt wird, wenn die Hupe betätigt wird
+#include "song_cantinaBand.cpp"
+
 const int buzzerPin = 9;
 int buzzerCount = 0;
 
-void horn(bool hornSwitch)
+/// @brief Die Hupe spielt einen Song ab
+/// @param hornswitch
+void horn(bool hornswitch)
+{
+    if (hornswitch || buzzerCount > 0)
+    {
+        playSong(buzzerPin, buzzerCount);
+        buzzerCount += 2;
+    }
+    else
+    {
+        buzzerCount = 0;
+        noTone(buzzerPin);
+    }
+}
+
+/*void horn(bool hornSwitch) //Einzelner Hupenton
 {
     if (hornSwitch)
     {
@@ -21,4 +40,4 @@ void horn(bool hornSwitch)
         }
         buzzerCount++;
     }
-}
+} */
