@@ -83,7 +83,18 @@ bool checkBluetoothHeader()
             }
             else if (header == '2') // Lenkung
             {
-                changeSteering(data.toInt());
+                if(data == "1")
+                {
+                    changeSteering(-2);
+                }
+                else if(data == "2")
+                {
+                    changeSteering(2);
+                }
+                else if(data == "0")
+                {
+                    changeSteering(0);
+                }
                 returnValue = true;
                 Serial.println("Lenken");
             }
@@ -95,7 +106,14 @@ bool checkBluetoothHeader()
             }
             else if (header == '5') // Hupe
             {
-                horn(data.toInt());
+                if (data == "1")
+                {
+                    horn(1);
+                }
+                else if (data == "0")
+                {
+                    horn(0);
+                }
                 returnValue = true;
                 Serial.println("Hupe");
             }

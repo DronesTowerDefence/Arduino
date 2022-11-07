@@ -30,8 +30,8 @@ void loop()
     checkBluetoothConnection();
     checkSteering();
     indicator(3);
-    sendBluetoothData(1, accelerationSensorRead());
-    sendBluetoothData(2, readIRSensor());
-
+    /* sendBluetoothData(1, accelerationSensorRead());
+    sendBluetoothData(2, readIRSensor()); */
+    horn(2);
     //delay(50);
 }

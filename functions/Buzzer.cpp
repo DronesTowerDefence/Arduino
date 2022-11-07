@@ -8,14 +8,22 @@ int buzzerCount = 0;
 
 /// @brief Die Hupe spielt einen Song ab
 /// @param hornswitch
-void horn(bool hornswitch)
+void horn(int hornswitch)
 {
-    if (hornswitch || buzzerCount > 0)
+    if (hornswitch == 1 && buzzerCount == 0)
     {
-        playSong(buzzerPin, buzzerCount);
+        playSong(buzzerPin, 0);
         buzzerCount += 2;
     }
-    else
+    else if (hornswitch == 2 && buzzerCount > 0)
+    {
+        if (!playSong(buzzerPin, buzzerCount))
+        {
+            buzzerCount = 0;
+        }
+        buzzerCount += 2;
+    }
+    else if (hornswitch == 0)
     {
         buzzerCount = 0;
         noTone(buzzerPin);
