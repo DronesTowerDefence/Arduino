@@ -96,13 +96,11 @@ bool checkBluetoothHeader()
                     changeSteering(0);
                 }
                 returnValue = true;
-                Serial.println("Lenken");
             }
             else if (header == '4') // Licht
             {
                 light(data.toInt());
                 returnValue = true;
-                Serial.println("Licht");
             }
             else if (header == '5') // Hupe
             {
@@ -115,7 +113,6 @@ bool checkBluetoothHeader()
                     horn(0);
                 }
                 returnValue = true;
-                Serial.println("Hupe");
             }
             else // Ungültiger Header
             {

@@ -3,6 +3,7 @@
 const int lightPin = 6;
 const int indicatorLeftPin = 7;
 const int indicatorRightPin = 8;
+const int indicatorSwitchMaxCount = 30;
 int indicatorState = 0;
 int indicatorSwitchCount = 0;
 bool indicatorSwitch = false;
@@ -40,13 +41,13 @@ void indicator(int state)
     {
         indicatorSwitchCount++;
         digitalWrite(indicatorRightPin, LOW);
-        if (indicatorSwitchCount > 50 && indicatorSwitch)
+        if (indicatorSwitchCount > indicatorSwitchMaxCount && indicatorSwitch)
         {
             digitalWrite(indicatorLeftPin, HIGH);
             indicatorSwitchCount = 0;
             indicatorSwitch = false;
         }
-        else if (indicatorSwitchCount > 50 && !indicatorSwitch)
+        else if (indicatorSwitchCount > indicatorSwitchMaxCount && !indicatorSwitch)
         {
             digitalWrite(indicatorLeftPin, LOW);
             indicatorSwitchCount = 0;
@@ -57,13 +58,13 @@ void indicator(int state)
     {
         indicatorSwitchCount++;
         digitalWrite(indicatorLeftPin, LOW);
-        if (indicatorSwitchCount > 50 && indicatorSwitch)
+        if (indicatorSwitchCount > indicatorSwitchMaxCount && indicatorSwitch)
         {
             digitalWrite(indicatorRightPin, HIGH);
             indicatorSwitchCount = 0;
             indicatorSwitch = false;
         }
-        else if (indicatorSwitchCount > 50 && !indicatorSwitch)
+        else if (indicatorSwitchCount > indicatorSwitchMaxCount && !indicatorSwitch)
         {
             digitalWrite(indicatorRightPin, LOW);
             indicatorSwitchCount = 0;
