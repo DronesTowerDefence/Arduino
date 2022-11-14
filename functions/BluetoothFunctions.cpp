@@ -83,15 +83,15 @@ bool checkBluetoothHeader()
             }
             else if (header == '2') // Lenkung
             {
-                if(data == "1")
+                if (data == "1")
                 {
                     changeSteering(-2);
                 }
-                else if(data == "2")
+                else if (data == "2")
                 {
                     changeSteering(2);
                 }
-                else if(data == "0")
+                else if (data == "0")
                 {
                     changeSteering(0);
                 }
@@ -123,12 +123,11 @@ bool checkBluetoothHeader()
     return returnValue;
 }
 
-/// @brief Bluetooth Senden (Noch nicht getestet) | 1:Geschwindigkeit | 2:IR-Sensor
+/// @brief Bluetooth Senden (Noch nicht getestet) | 1:Geschwindigkeit | 2:IR-Sensor | 3:Ausgabe
 /// @return Ob die Daten gesendet wurden
-bool sendBluetoothData(int parameter, int parameter2)
+bool sendBluetoothData(int parameter, String parameter2)
 {
     int header = 0;
-    int value = parameter2;
     switch (parameter)
     {
     case 1: // Geschwindigkeit
@@ -139,6 +138,10 @@ bool sendBluetoothData(int parameter, int parameter2)
         header = 6;
         break;
 
+    case 3: // Ausgabe (S.Monitor)
+        header = 7;
+        break;
+
     default:
         return false;
     }
@@ -146,15 +149,15 @@ bool sendBluetoothData(int parameter, int parameter2)
     Serial.print("Header: "); // Ausgabe: Header
     Serial.println(header);
     Serial.print("Value: "); // Ausgabe: Inhalt
-    Serial.println(value);
+    Serial.println(parameter2);
 
-    if (Serial1.print("\x01" + String(header) + "\x02" + String(value) + "\x03") > 0)
+    if (Serial1.print("\x01" + String(header) + "\x02" + String(parameter2) + "\x03") > 0)
         return true;
     else
         return false;
 }
 
-/// @brief Überprüft, ob die Verbindung zur Fernbedienung noch steht oder nicht
+/// @brief Überprüft, ob die Verbindung zur Fernbedienung noch steht
 /// @return True wenn Verbindung vorhanden
 bool checkBluetoothConnection()
 {

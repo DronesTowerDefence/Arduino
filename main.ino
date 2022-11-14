@@ -31,7 +31,12 @@ void loop()
     checkSteering();
     indicator(3);
     horn(2);
-    // sendBluetoothData(1, accelerationSensorRead());
-    // sendBluetoothData(2, readIRSensor());
+
+    // Zum testen
+    accelerationSensorRead();
+
+    // sendBluetoothData(1, String(accelerationSensorRead()));
+    // sendBluetoothData(2, String(readIRSensor()));
+    
     //delay(50);
 }
