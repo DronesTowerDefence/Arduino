@@ -17,8 +17,8 @@ bool changeSteering(int changeRotation)
     {
         steeringPos += changeRotation;
         steeringServo.write(steeringPos);
-        Serial.print("Servo auf: ");
-        Serial.println(steeringServo.read());
+        /* Serial.print("Servo auf: ");
+        Serial.println(steeringServo.read()); */
         return true;
     }
     else

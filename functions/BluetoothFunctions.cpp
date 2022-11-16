@@ -22,8 +22,8 @@ bool checkBluetoothHeader()
 
         dataSource = Serial1.readString();
 
-        Serial.print("Erhaltene Daten: "); // Ausgabe: Rohdaten
-        Serial.println(dataSource);
+        /* Serial.print("Erhaltene Daten: "); // Ausgabe: Rohdaten
+        Serial.println(dataSource); */
 
         while (nextHeaderInString) // Solange noch ein Header in dem String kommt
         {
@@ -38,8 +38,8 @@ bool checkBluetoothHeader()
             first = dataSource.indexOf("\x01"); // Sucht das erste Steuerzeichen (SOH)
             header = dataSource[first + 1];
 
-            Serial.print("Erhaltener Header: "); // Ausgabe: Header
-            Serial.println(header);
+            /* Serial.print("Erhaltener Header: "); // Ausgabe: Header
+            Serial.println(header); */
 
             first = dataSource.indexOf("\x02");  // Sucht SOH
             second = dataSource.indexOf("\x03"); // Sucht ETX
@@ -47,8 +47,8 @@ bool checkBluetoothHeader()
 
             data = dataSource.substring(first + 1, second); // Kopiert das, was zwischen den beiden Steuerzeichen steht in einen anderen String
 
-            Serial.print("Erhaltener Inhalt: "); // Ausgabe: Inhalt
-            Serial.println(data);
+            /* Serial.print("Erhaltener Inhalt: "); // Ausgabe: Inhalt
+            Serial.println(data); */
 
             if (dataReadOfString + second < dataSource.length())
             {
@@ -56,8 +56,8 @@ bool checkBluetoothHeader()
                 dataReadOfString = second;
                 dataSourceTmp = dataSource;
                 dataSource = dataSourceTmp.substring(second + 1, dataSourceTmp.length()); // Kopiert den Rest des Strings in den String
-                Serial.print("Rest: ");
-                Serial.println(dataSource);
+                /* Serial.print("Rest: ");
+                Serial.println(dataSource); */
             }
 
             // Header-Überprüfung:
@@ -68,17 +68,14 @@ bool checkBluetoothHeader()
                 if (data == "0") // Bremsen
                 {
                     // Bremsen
-                    Serial.println("Bremsen");
                 }
                 else if (data == "1") // Vorwärts
                 {
                     // Vorwärts
-                    Serial.println("Vorwärts");
                 }
                 else if (data == "2") // Rückwärts
                 {
                     // Rückwärts
-                    Serial.println("Rückwärts");
                 }
             }
             else if (header == '2') // Lenkung
@@ -146,10 +143,10 @@ bool sendBluetoothData(int parameter, String parameter2)
         return false;
     }
 
-    Serial.print("Header: "); // Ausgabe: Header
+    /* Serial.print("Header: "); // Ausgabe: Header
     Serial.println(header);
     Serial.print("Value: "); // Ausgabe: Inhalt
-    Serial.println(parameter2);
+    Serial.println(parameter2); */
 
     if (Serial1.print("\x01" + String(header) + "\x02" + String(parameter2) + "\x03") > 0)
         return true;
@@ -167,7 +164,7 @@ bool checkBluetoothConnection()
     }
     else
     {
-        // Bremsen
+        // TODO: Bremsen
         return false;
     }
 }
