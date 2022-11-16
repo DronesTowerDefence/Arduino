@@ -2,6 +2,9 @@
 #include <Servo.h>
 
 Servo steeringServo;
+const int steeringPosMin = 45;
+const int steeringPosMax = 155;
+const int steeringPosMid = (steeringPosMax + steeringPosMin) / 2;
 int steeringPos = 100;
 
 /// @brief Ändert die Auslenkung der Lenkachse
@@ -9,11 +12,11 @@ int steeringPos = 100;
 /// @return Ob die Auslenkung verändert wurde
 bool changeSteering(int changeRotation)
 {
-    if(changeRotation == 0)
+    if (changeRotation == 0)
     {
-        // TODO: Auf die Mitte zurücksetzen
+        steeringServo.write(steeringPosMid);
     }
-    if (steeringPos + changeRotation >= 45 && steeringPos + changeRotation <= 155)
+    if (steeringPos + changeRotation >= steeringPosMin && steeringPos + changeRotation <= steeringPosMax)
     {
         steeringPos += changeRotation;
         steeringServo.write(steeringPos);
@@ -30,15 +33,15 @@ void checkSteering()
 {
     steeringServo.write(steeringPos);
 
-    if (steeringPos == 100)
+    if (steeringPos >= steeringPosMid + 10 || steeringPos <= steeringPosMid - 10)
     {
         indicator(0);
     }
-    else if (steeringPos > 100)
+    else if (steeringPos > steeringPosMid + 10)
     {
         indicator(2);
     }
-    else if (steeringPos < 100)
+    else if (steeringPos < steeringPosMid - 10)
     {
         indicator(1);
     }
