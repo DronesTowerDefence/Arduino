@@ -113,7 +113,7 @@ bool checkBluetoothHeader()
             }
             else // Ungültiger Header
             {
-                Serial.println("Ungültiger Header");
+                // Serial.println("Ungültiger Header");
             }
         }
     }

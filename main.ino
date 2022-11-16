@@ -25,17 +25,14 @@ void setup()
 
 void loop()
 {
-    checkBluetoothHeader();
     checkBluetoothConnection();
+    checkBluetoothHeader();
     checkSteering();
     indicator(3);
     horn(2);
 
-    // Zum testen
-    accelerationSensorRead();
+    accelerationSensorRead(0);
 
-    // sendBluetoothData(1, String(accelerationSensorRead()));
-    // sendBluetoothData(2, String(readIRSensor()));
-
-    // delay(50);
+    sendBluetoothData(1, String(accelerationSensorRead(0)));
+    sendBluetoothData(2, String(readIRSensor()));
 }
