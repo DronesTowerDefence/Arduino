@@ -25,7 +25,9 @@ bool checkBluetoothHeader()
         /* Serial.print("Erhaltene Daten: "); // Ausgabe: Rohdaten
         Serial.println(dataSource); */
 
-        while (nextHeaderInString) // Solange noch ein Header in dem String kommt
+        unsigned long timer = millis(); // millis gibt die Zeit seit dem ausführen des Programms / Start des Arduinos zurück
+
+        while (nextHeaderInString && millis() <= timer + 500) // Solange noch ein Header in dem String kommt
         {
             // Zurücksetzen der Variablen
             nextHeaderInString = false;
@@ -64,7 +66,7 @@ bool checkBluetoothHeader()
             if (header == '1') // Bewegung: Vor/Zurück
             {
                 returnValue = true;
-
+                // TODO
                 if (data == "0") // Bremsen
                 {
                     // Bremsen

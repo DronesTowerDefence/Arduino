@@ -6,6 +6,8 @@
 #include "functions/Steering.cpp"
 #include "functions/BluetoothFunctions.cpp"
 
+// Arduino darf nicht länger als 49.17 Tage am Stück laufen wegen Daten-Überlauf
+
 void setup()
 {
     Serial1.begin(9600);
@@ -31,8 +33,11 @@ void loop()
     indicator(3);
     horn(2);
 
+    // Sensor Daten auslesen
     accelerationSensorRead(0);
+    readIRSensor();
 
-    sendBluetoothData(1, String(accelerationSensorRead(0)));
-    sendBluetoothData(2, String(readIRSensor()));
+    // Daten an die App senden
+    sendBluetoothData(1, String(acceleration));
+    sendBluetoothData(2, String(IRSensorData));
 }
