@@ -2,19 +2,26 @@
 #include <Servo.h>
 
 Servo steeringServo;
-int steeringPos = 0;
+const int steeringPosMin = 45;
+const int steeringPosMax = 155;
+const int steeringPosMid = (steeringPosMax + steeringPosMin) / 2;
+int steeringPos = 100;
 
 /// @brief Ändert die Auslenkung der Lenkachse
-/// @param changeRotation Grad in welche die Richtung verändert werden soll 
+/// @param changeRotation Grad in welche die Richtung verändert werden soll
 /// @return Ob die Auslenkung verändert wurde
 bool changeSteering(int changeRotation)
 {
-    if (steeringPos + changeRotation >= 45 && steeringPos + changeRotation <= 155)
+    if (changeRotation == 0)
     {
-        steeringPos+=changeRotation;
+        steeringServo.write(steeringPosMid);
+    }
+    if (steeringPos + changeRotation >= steeringPosMin && steeringPos + changeRotation <= steeringPosMax)
+    {
+        steeringPos += changeRotation;
         steeringServo.write(steeringPos);
-        Serial.print("Servo auf: ");
-        Serial.println(steeringServo.read());
+        /* Serial.print("Servo auf: ");
+        Serial.println(steeringServo.read()); */
         return true;
     }
     else
@@ -26,15 +33,15 @@ void checkSteering()
 {
     steeringServo.write(steeringPos);
 
-    if (steeringPos == 100)
+    if (steeringPos >= steeringPosMid + 10 || steeringPos <= steeringPosMid - 10)
     {
         indicator(0);
     }
-    else if (steeringPos > 100)
+    else if (steeringPos > steeringPosMid + 10)
     {
         indicator(2);
     }
-    else if (steeringPos < 100)
+    else if (steeringPos < steeringPosMid - 10)
     {
         indicator(1);
     }

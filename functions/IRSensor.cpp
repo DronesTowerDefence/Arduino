@@ -2,13 +2,14 @@
 
 const int IRSensorV = 4;
 const int IRSensorH = 5;
+int IRSensorData = 0;
 
 /// @brief Auslesen der IR-Sensoren
 /// @return 0:Nichts | 1:Vorne | 2:Hinten | 3:Beide
 int readIRSensor()
 {
-    int returnValue = 0;
-
+    IRSensorData = 0;
+    
     /* //LED - NUR ZUM TESTEN
     if (digitalRead(IRSensorV) != 1)
     {
@@ -24,12 +25,12 @@ int readIRSensor()
 
     if (digitalRead(IRSensorV) != 1)
     {
-        returnValue += 1;
+        IRSensorData += 1;
     }
     if (digitalRead(IRSensorH) != 1)
     {
-        returnValue += 2;
+        IRSensorData += 2;
     }
 
-    return returnValue;
+    return IRSensorData;
 }

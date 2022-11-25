@@ -6,32 +6,38 @@
 #include "functions/Steering.cpp"
 #include "functions/BluetoothFunctions.cpp"
 
+// Arduino darf nicht länger als 49.17 Tage am Stück laufen wegen Daten-Überlauf
+
 void setup()
 {
     Serial1.begin(9600);
     Serial.begin(9600);
 
-    pinMode(13, OUTPUT); // StatusLED
-
-    pinMode(lightPin, OUTPUT);       // Licht Vorne/Hinten
+    pinMode(13, OUTPUT);                // StatusLED
+    pinMode(lightPin, OUTPUT);          // Licht Vorne/Hinten
     pinMode(indicatorLeftPin, OUTPUT);  // Blinker Links
     pinMode(indicatorRightPin, OUTPUT); // Blinker Rechts
-    pinMode(bluetoothStatus, INPUT); // Bluetooth-Status
-    pinMode(IRSensorV, INPUT);       // IR-Vorne
-    pinMode(IRSensorH, INPUT);       // IR-Hinten
-    steeringServo.attach(2);         // PWM-Anschluss des Servo-Motors
+    pinMode(bluetoothStatus, INPUT);    // Bluetooth-Status
+    pinMode(IRSensorV, INPUT);          // IR-Vorne
+    pinMode(IRSensorH, INPUT);          // IR-Hinten
+    steeringServo.attach(2);            // PWM-Anschluss des Servo-Motors
 
     accelerationSensorSetup(); // Setup für den Beschleunigungssensors
 }
 
 void loop()
 {
-    checkBluetoothHeader();
     checkBluetoothConnection();
+    checkBluetoothHeader();
     checkSteering();
     indicator(3);
-    sendBluetoothData(1, accelerationSensorRead());
-    sendBluetoothData(2, readIRSensor());
+    horn(2);
 
-    //delay(50);
+    // Sensor Daten auslesen
+    accelerationSensorRead(0);
+    readIRSensor();
+
+    // Daten an die App senden
+    sendBluetoothData(1, String(acceleration));
+    sendBluetoothData(2, String(IRSensorData));
 }

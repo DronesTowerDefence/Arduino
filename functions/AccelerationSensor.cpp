@@ -1,40 +1,76 @@
 // Beschleunigungssensor
 #include <Wire.h>
+#include <MPU6050_light.h>
 
-const int MPU_ADDR = 0x68; // I2C Adresse vom MPU (Sensor)
+/*
+SENSOR-INFOS:
+---------------------------------------------------------------------------------
+Ruhezustand "getAcc":
+X:0 | Y:0 | Z:1 -> Zeigt an wie sehr die Erdbeschleunigung auf die Achse wirkt
+---------------------------------------------------------------------------------
+GYRO:
+Gyro zeigt temporär falsche Werte an, wenn man es zu schnell bewegt.
+(Braucht einige Sekunden, um wieder auf 0 zu kommen)
+(Könnte auch an der Bau-Rate des seriellen Monitors liegen)
+Die Z-Achse steigt oder singt manchmal konstant, ist ein bekanntes Problem.
+(https://github.com/rfetick/MPU6050_light/issues/34)
+Die Funktion getAccAngle berechnet den Winkel nicht mit dem Gyro, sondern mit g,
+dort tritt der Fehler nicht auf, ist dafür aber ungenauer
+---------------------------------------------------------------------------------
 
-unsigned int accelerometer_x, accelerometer_y, accelerometer_z;
+*/
 
-/// @brief !! Nur fürs setup !!
+MPU6050 mpu(Wire);
+float accelerationGravity[3];
+float acceleration = 0.0f;
+
+/// @brief Setup für den Beschleunigungssensor
 void accelerationSensorSetup()
 {
     Wire.begin();
-    Wire.beginTransmission(MPU_ADDR);
-    Wire.write(0x6B);
-    Wire.write(0); // Null gesetzt, wach geschaltet
-    Wire.endTransmission(true);
+    mpu.begin();
+
+    // Setzt die aktuelle Position des Gyro's auf 0
+    // Wenn das Auto bei Aufruf der Funktion schief steht, wird diese Schräge trotzdem als 0 genommen
+    mpu.calcGyroOffsets();
+
+    // Setzt die aktuelle Geschwindigkeit als den 0 Wert des Sensors
+    // Auto sollte dabei still stehen
+    mpu.calcAccOffsets();
+
+    // Wenn der Sensor falsch herum eingebaut wurde (auf dem Kopf)
+    // mpu.upsideDownMounting = true;
 }
 
-/// @brief Auslesen der Sensordaten
-/// @return Beschleunigung in x-Richtung
-int accelerationSensorRead()
+/// @brief Liest die Daten aus dem Sensor aus und berechnet die Geschwindigkeit (min. 0.8829m/s)
+/// @param index 0:X | 1:Y | 2:Z
+/// @return Geschwindigkeit in m/s Vorwärts(+)/Rückwärts(-)
+int accelerationSensorRead(int index)
 {
-    Wire.beginTransmission(MPU_ADDR);
-    Wire.write(0x3B);
-    Wire.endTransmission(false);          // Verbindung bleibt aktiv WICHTIG
-    Wire.requestFrom(MPU_ADDR, 14, true); // 14 Register
+    mpu.update();
 
-    // Werte werden ausgelesen
-    accelerometer_x = Wire.read() << 8 | Wire.read(); // reading registers: 0x3B (ACCEL_XOUT_H) and 0x3C (ACCEL_XOUT_L)
-    accelerometer_y = Wire.read() << 8 | Wire.read(); // reading registers: 0x3D (ACCEL_YOUT_H) and 0x3E (ACCEL_YOUT_L)
-    accelerometer_z = Wire.read() << 8 | Wire.read(); // reading registers: 0x3F (ACCEL_ZOUT_H) and 0x40 (ACCEL_ZOUT_L)
+    acceleration = 0;
+    accelerationGravity[0] = mpu.getAccX();
+    accelerationGravity[1] = mpu.getAccY();
+    accelerationGravity[2] = mpu.getAccZ();
 
-    Serial.print("Beschleunigung-X: ");
-    Serial.println(accelerometer_x);
-    Serial.print("Beschleunigung-Y: ");
-    Serial.println(accelerometer_y);
-    Serial.print("Beschleunigung-Z: ");
-    Serial.println(accelerometer_z);
+    if (index >= 0 && index <= 2)
+    {
+        if (accelerationGravity[index] >= 0.09)
+        {
+            acceleration = accelerationGravity[index] * 9.81;
+        }
 
-    return accelerometer_x;
+        // Ausgabe zum testen
+        /* if (acceleration > 0)
+        {
+            Serial.print("A-X: ");
+            Serial.print(acceleration);
+            Serial.print(" m/s");
+
+            Serial.println();
+            Serial.println();
+        } */
+    }
+    return acceleration;
 }
