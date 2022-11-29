@@ -4,6 +4,7 @@
 #include "functions/Light.cpp"
 #include "functions/Buzzer.cpp"
 #include "functions/Steering.cpp"
+#include "functions/Motoren.cpp"
 #include "functions/BluetoothFunctions.cpp"
 
 // Arduino darf nicht länger als 49.17 Tage am Stück laufen wegen Daten-Überlauf
@@ -21,7 +22,9 @@ void setup()
     pinMode(IRSensorV, INPUT);          // IR-Vorne
     pinMode(IRSensorH, INPUT);          // IR-Hinten
     steeringServo.attach(2);            // PWM-Anschluss des Servo-Motors
-
+    pinMode(powerrel, OUTPUT);
+    pinMode(directrel, OUTPUT);
+    pinMode(safetyrel, OUTPUT);
     accelerationSensorSetup(); // Setup für den Beschleunigungssensors
 }
 
@@ -40,4 +43,5 @@ void loop()
     // Daten an die App senden
     sendBluetoothData(1, String(acceleration));
     sendBluetoothData(2, String(IRSensorData));
-}
+
+ }

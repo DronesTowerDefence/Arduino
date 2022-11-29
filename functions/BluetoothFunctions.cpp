@@ -22,8 +22,8 @@ bool checkBluetoothHeader()
 
         dataSource = Serial1.readString();
 
-        /* Serial.print("Erhaltene Daten: "); // Ausgabe: Rohdaten
-        Serial.println(dataSource); */
+        Serial.print("Erhaltene Daten: "); // Ausgabe: Rohdaten
+        Serial.println(dataSource);
 
         unsigned long timer = millis(); // millis gibt die Zeit seit dem ausführen des Programms / Start des Arduinos zurück
 
@@ -66,29 +66,28 @@ bool checkBluetoothHeader()
             if (header == '1') // Bewegung: Vor/Zurück
             {
                 returnValue = true;
-                // TODO
                 if (data == "0") // Bremsen
                 {
-                    // Bremsen
+                    motorbefehl(0);
                 }
                 else if (data == "1") // Vorwärts
                 {
-                    // Vorwärts
+                    motorbefehl(1);
                 }
                 else if (data == "2") // Rückwärts
                 {
-                    // Rückwärts
+                    motorbefehl(2);
                 }
             }
             else if (header == '2') // Lenkung
             {
                 if (data == "1")
                 {
-                    changeSteering(-2);
+                    changeSteering(-5);
                 }
                 else if (data == "2")
                 {
-                    changeSteering(2);
+                    changeSteering(5);
                 }
                 else if (data == "0")
                 {
@@ -166,7 +165,7 @@ bool checkBluetoothConnection()
     }
     else
     {
-        // TODO: Bremsen
+        motorbefehl(0);
         return false;
     }
 }
