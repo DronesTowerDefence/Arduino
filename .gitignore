@@ -1,5 +1,3 @@
 # Ignore vs-code Arduino config
-arduino.json
-c_cpp_properties.json
-launch.json
-tasks.json
+*.json
+main.ino
