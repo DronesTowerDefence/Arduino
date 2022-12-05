@@ -17,9 +17,15 @@ void motorbefehl(int signal)
     }
     if (signal == 2) // Bremsen / Rückwärts
     {
+        if(accelaration==0){
         digitalWrite(directrel, LOW);
         digitalWrite(powerrel, HIGH);
         digitalWrite(safetyrel, LOW);
         Serial.println("Rückwärts");
+        }
+        else{
+        digitalWrite(powerrel, LOW);
+        Serial.println("Nichts");
+        }
     }
 }
