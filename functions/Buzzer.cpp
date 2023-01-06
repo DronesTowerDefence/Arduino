@@ -30,22 +30,23 @@ void horn(int hornswitch)
     }
 }
 
-/*void horn(bool hornSwitch) //Einzelner Hupenton
+/// @brief Einzelner Hupenton
+/// @param hornSwitch an/nichts
+void hornSingle(bool hornSwitch)
 {
     if (hornSwitch)
     {
         buzzerCount = 0;
     }
-    else
+
+    buzzerCount++;
+    if (buzzerCount == 0)
     {
-        if (buzzerCount == 0)
-        {
-            tone(buzzerPin, 500);
-        }
-        else if (buzzerCount > 50)
-        {
-            noTone(buzzerPin);
-        }
-        buzzerCount++;
+        tone(buzzerPin, 500);
     }
-} */
+    else if (buzzerCount > 50)
+    {
+        noTone(buzzerPin);
+        buzzerCount = 0;
+    }
+}

@@ -8,6 +8,7 @@
 #include "functions/BluetoothFunctions.cpp"
 
 // Arduino darf nicht länger als 49.17 Tage am Stück laufen wegen Daten-Überlauf
+// Der Arduino braucht ca. 35 Millisekunden, um einmal die loop-Funktion zu durchlaufen.
 
 void setup()
 {
@@ -35,6 +36,7 @@ void loop()
     checkSteering();
     indicator(3);
     horn(2);
+    motorbefehl(-1);
 
     // Sensor Daten auslesen
     accelerationSensorRead(0);
@@ -42,6 +44,5 @@ void loop()
 
     // Daten an die App senden
     sendBluetoothData(1, String(acceleration));
-    sendBluetoothData(2, String(IRSensorData));
-
- }
+    // sendBluetoothData(2, String(IRSensorData));
+}

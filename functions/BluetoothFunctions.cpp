@@ -1,6 +1,17 @@
 // Bluetooth: Empfangen und Senden
 
+void (*resetFunc)() = 0; // Wie der reset-Knopf auf dem Arduino
+
 const int bluetoothStatus = 3;
+
+unsigned int bluetoothConnectionLostSince = 0;
+
+/// @brief Wie der Reset-Knopf nur digital
+void reset()
+{
+    motorbefehl(0);
+    resetFunc();
+}
 
 /// @brief Bluetooth Empfang und Umsetzung der erhaltenen Daten
 /// @return Ob eine Nachricht angekommen ist
@@ -63,7 +74,11 @@ bool checkBluetoothHeader()
             }
 
             // Header-Überprüfung:
-            if (header == '1') // Bewegung: Vor/Zurück
+            if (header == '0' && data == "1") // Reset
+            {
+                reset();
+            }
+            else if (header == '1') // Bewegung: Vor/Zurück
             {
                 returnValue = true;
                 if (data == "0") // Bremsen
@@ -81,18 +96,7 @@ bool checkBluetoothHeader()
             }
             else if (header == '2') // Lenkung
             {
-                if (data == "1")
-                {
-                    changeSteering(-5);
-                }
-                else if (data == "2")
-                {
-                    changeSteering(5);
-                }
-                else if (data == "0")
-                {
-                    changeSteering(0);
-                }
+                changeSteering(data.toInt());
                 returnValue = true;
             }
             else if (header == '4') // Licht
@@ -159,13 +163,20 @@ bool sendBluetoothData(int parameter, String parameter2)
 /// @return True wenn Verbindung vorhanden
 bool checkBluetoothConnection()
 {
+    if(bluetoothConnectionLostSince > 300)
+    {
+        reset();
+    }
+
     if (digitalRead(bluetoothStatus) == 1)
     {
+        bluetoothConnectionLostSince = 0;
         return true;
     }
     else
     {
         motorbefehl(0);
+        bluetoothConnectionLostSince++;
         return false;
     }
 }

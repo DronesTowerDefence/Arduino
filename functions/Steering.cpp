@@ -16,8 +16,9 @@ bool changeSteering(int changeRotation)
     {
         steeringPos = steeringPosMid;
         steeringServo.write(steeringPosMid);
+        return true;
     }
-    if (steeringPos + changeRotation >= steeringPosMin && steeringPos + changeRotation <= steeringPosMax)
+    else if (steeringPos + changeRotation >= steeringPosMin && steeringPos + changeRotation <= steeringPosMax)
     {
         steeringPos += changeRotation;
         steeringServo.write(steeringPos);

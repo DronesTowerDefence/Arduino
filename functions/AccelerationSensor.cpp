@@ -8,6 +8,9 @@ SENSOR-INFOS:
 Ruhezustand "getAcc":
 X:0 | Y:0 | Z:1 -> Zeigt an wie sehr die Erdbeschleunigung auf die Achse wirkt
 ---------------------------------------------------------------------------------
+Der Sensor überprüft jede ms die Beschleunigung
+Er hat eine Frequenz von 1 KHz = 1000 Hz = 1000 überprüfungen pro Minute
+---------------------------------------------------------------------------------
 GYRO:
 Gyro zeigt temporär falsche Werte an, wenn man es zu schnell bewegt.
 (Braucht einige Sekunden, um wieder auf 0 zu kommen)
@@ -17,7 +20,6 @@ Die Z-Achse steigt oder singt manchmal konstant, ist ein bekanntes Problem.
 Die Funktion getAccAngle berechnet den Winkel nicht mit dem Gyro, sondern mit g,
 dort tritt der Fehler nicht auf, ist dafür aber ungenauer
 ---------------------------------------------------------------------------------
-
 */
 
 MPU6050 mpu(Wire);
@@ -56,21 +58,21 @@ int accelerationSensorRead(int index)
 
     if (index >= 0 && index <= 2)
     {
-        if (accelerationGravity[index] >= 0.09)
+        if (accelerationGravity[index] >= 0.09 || accelerationGravity[index] <= -0.09)
         {
             acceleration = accelerationGravity[index] * 9.81;
         }
 
         // Ausgabe zum testen
-        /* if (acceleration > 0)
+        if (acceleration != 0)
         {
-            Serial.print("A-X: ");
+            Serial.print("Acc: ");
             Serial.print(acceleration);
             Serial.print(" m/s");
 
             Serial.println();
             Serial.println();
-        } */
+        }
     }
     return acceleration;
 }
