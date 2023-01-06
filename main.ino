@@ -44,5 +44,5 @@ void loop()
 
     // Daten an die App senden
     sendBluetoothData(1, String(acceleration));
-    // sendBluetoothData(2, String(IRSensorData));
+    sendBluetoothData(2, String(IRSensorData));
 }

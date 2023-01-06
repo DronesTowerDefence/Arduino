@@ -64,7 +64,7 @@ int accelerationSensorRead(int index)
         }
 
         // Ausgabe zum testen
-        if (acceleration != 0)
+        /* if (acceleration != 0)
         {
             Serial.print("Acc: ");
             Serial.print(acceleration);
@@ -72,7 +72,7 @@ int accelerationSensorRead(int index)
 
             Serial.println();
             Serial.println();
-        }
+        } */
     }
     return acceleration;
 }
