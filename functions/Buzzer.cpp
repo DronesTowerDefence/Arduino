@@ -3,8 +3,11 @@
 // Song welcher abgespielt wird, wenn die Hupe betätigt wird
 #include "BuzzerSong.cpp"
 
-const int buzzerPin = 9;
+const int buzzerPin = 6;
 int buzzerCount = 0;
+int sirenSwitchCount = 0;
+bool sirenSwitch = false;
+const int sirenMaxCount = 40;
 
 /// @brief Die Hupe spielt einen Song ab
 /// @param hornswitch
@@ -48,5 +51,32 @@ void hornSingle(bool hornSwitch)
     {
         noTone(buzzerPin);
         buzzerCount = 0;
+    }
+}
+
+void siren(bool state)
+{
+    sirenSwitch = state;
+    if (sirenSwitch)
+    {
+        if (sirenSwitchCount <= sirenMaxCount)
+        {
+            tone(buzzerPin, 400);
+            sirenSwitchCount++;
+        }
+        else if (sirenSwitchCount > sirenMaxCount && sirenSwitchCount < sirenMaxCount * 2)
+        {
+            tone(buzzerPin, 600);
+            sirenSwitchCount++;
+        }
+        else
+        {
+            sirenSwitchCount = 0;
+        }
+    }
+    else
+    {
+        noTone(buzzerPin);
+        sirenSwitchCount = 0;
     }
 }

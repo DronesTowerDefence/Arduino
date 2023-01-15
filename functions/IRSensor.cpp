@@ -1,7 +1,7 @@
 // IR-Sensor
 
-const int IRSensorV = 4;
-const int IRSensorH = 5;
+const int pin_IRSensorV = 5;
+const int pin_IRSensorH = 4;
 int IRSensorData = 0;
 
 /// @brief Auslesen der IR-Sensoren
@@ -9,25 +9,12 @@ int IRSensorData = 0;
 int readIRSensor()
 {
     IRSensorData = 0;
-    
-    /* //LED - NUR ZUM TESTEN
-    if (digitalRead(IRSensorV) != 1)
-    {
-        Serial.println("Hindernis");
-        digitalWrite(13, HIGH);
-    }
-    else
-    {
-        Serial.println("Nichts");
-        digitalWrite(13, LOW);
-    }
-    // */
 
-    if (digitalRead(IRSensorV) != 1)
+    if (digitalRead(pin_IRSensorV) != 1)
     {
         IRSensorData += 1;
     }
-    if (digitalRead(IRSensorH) != 1)
+    if (digitalRead(pin_IRSensorH) != 1)
     {
         IRSensorData += 2;
     }

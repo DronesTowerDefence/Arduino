@@ -1,9 +1,17 @@
 // Licht und Blinker
 
-const int lightPin = 6;
-const int indicatorLeftPin = 7;
-const int indicatorRightPin = 8;
-const int indicatorSwitchMaxCount = 30;
+const int lightBackPin = 53;
+const int lightFrontPin1 = 47;
+const int lightFrontPin2 = 45;
+const int indicatorLeftPin = 51;
+const int indicatorRightPin = 49;
+const int bluelightPin1 = 43;
+const int bluelightPin2 = 41;
+const int bluelightSwitchMaxCount = 40;
+int bluelightState = 0;
+int bluelightSwitchCount = 0;
+bool bluelightSwitch = 0;
+const int indicatorSwitchMaxCount = 120;
 int indicatorState = 0;
 int indicatorSwitchCount = 0;
 bool indicatorSwitch = false;
@@ -14,11 +22,50 @@ void light(bool state)
 {
     if (state)
     {
-        digitalWrite(lightPin, HIGH);
+        digitalWrite(lightFrontPin1, HIGH);
+        digitalWrite(lightFrontPin2, HIGH);
+        digitalWrite(lightBackPin, HIGH);
     }
     else
     {
-        digitalWrite(lightPin, LOW);
+        digitalWrite(lightFrontPin1, LOW);
+        digitalWrite(lightFrontPin2, LOW);
+        digitalWrite(lightBackPin, LOW);
+    }
+}
+
+/// @brief Blaulicht
+/// @param state 0=Aus | 1=An
+void blueLight(int state)
+{
+    if (state == 0 || state == 1)
+    {
+        bluelightState = state;
+    }
+
+    if (bluelightState == 0)
+    {
+        digitalWrite(bluelightPin1, LOW);
+        digitalWrite(bluelightPin2, LOW);
+        bluelightSwitchCount = 0;
+    }
+    else if (bluelightState == 1)
+    {
+        bluelightSwitchCount++;
+        if (bluelightSwitchCount > bluelightSwitchMaxCount && bluelightSwitch)
+        {
+            digitalWrite(bluelightPin1, LOW);
+            digitalWrite(bluelightPin2, HIGH);
+            bluelightSwitchCount = 0;
+            bluelightSwitch = false;
+        }
+        else if (bluelightSwitchCount > bluelightSwitchMaxCount && !bluelightSwitch)
+        {
+            digitalWrite(bluelightPin1, HIGH);
+            digitalWrite(bluelightPin2, LOW);
+            bluelightSwitchCount = 0;
+            bluelightSwitch = true;
+        }
     }
 }
 

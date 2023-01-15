@@ -12,6 +12,9 @@ int steeringPos = 100;
 /// @return Ob die Auslenkung verändert wurde
 bool changeSteering(int changeRotation)
 {
+    /* Serial.print("ChangeRotation:");
+    Serial.println(changeRotation); */
+
     if (changeRotation == 0)
     {
         steeringPos = steeringPosMid;
@@ -33,9 +36,14 @@ bool changeSteering(int changeRotation)
 /// @brief Überprüft, ob die Position der Lenkung richtig ist und setzt ggf. den Blinker
 void checkSteering()
 {
+    /* Serial.print("Aktuell: ");
+    Serial.print(steeringServo.read());
+    Serial.print("\tSoll: ");
+    Serial.println(steeringPos); */
+
     steeringServo.write(steeringPos);
 
-    if (steeringPos >= steeringPosMid + 10 || steeringPos <= steeringPosMid - 10)
+    if (steeringPos <= steeringPosMid + 10 && steeringPos >= steeringPosMid - 10)
     {
         indicator(0);
     }

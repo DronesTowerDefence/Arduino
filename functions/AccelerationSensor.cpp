@@ -25,6 +25,7 @@ dort tritt der Fehler nicht auf, ist dafür aber ungenauer
 MPU6050 mpu(Wire);
 float accelerationGravity[3];
 float acceleration = 0.0f;
+float velocity = 0.0f;
 
 /// @brief Setup für den Beschleunigungssensor
 void accelerationSensorSetup()
@@ -58,9 +59,13 @@ int accelerationSensorRead(int index)
 
     if (index >= 0 && index <= 2)
     {
-        if (accelerationGravity[index] >= 0.09 || accelerationGravity[index] <= -0.09)
+        if (accelerationGravity[index] >= 0.08 || accelerationGravity[index] <= -0.08)
         {
             acceleration = accelerationGravity[index] * 9.81;
+            /* acceleration /= 1000;
+            acceleration *= 35;
+            velocity += acceleration; 
+            acceleration = 0; */
         }
 
         // Ausgabe zum testen

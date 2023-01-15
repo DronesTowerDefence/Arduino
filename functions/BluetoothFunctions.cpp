@@ -116,6 +116,19 @@ bool checkBluetoothHeader()
                 }
                 returnValue = true;
             }
+            else if (header == '8')
+            {
+                if (data == "0")
+                {
+                    siren(false);
+                    blueLight(0);
+                }
+                else if (data == "1")
+                {
+                    siren(true);
+                    blueLight(1);
+                }
+            }
             else // Ungültiger Header
             {
                 // Serial.println("Ungültiger Header");
@@ -163,7 +176,7 @@ bool sendBluetoothData(int parameter, String parameter2)
 /// @return True wenn Verbindung vorhanden
 bool checkBluetoothConnection()
 {
-    if(bluetoothConnectionLostSince > 300)
+    if (bluetoothConnectionLostSince > 300)
     {
         reset();
     }
