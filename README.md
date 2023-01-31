@@ -1,4 +1,4 @@
-# Arduino WIP
+# Arduino
 
 Der Code für ein batteriegetriebens Auto, das mit einer Handy-App über Bluetooth ferngesteuert werden kann (https://github.com/DronesTowerDefence/Controller).
 
